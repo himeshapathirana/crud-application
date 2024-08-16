@@ -146,12 +146,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       return Dismissible(
                         key: Key(user.id),
                         background: Container(
-                          color: Colors.redAccent,
+                          color: Color.fromARGB(255, 165, 0, 0),
                           alignment: Alignment.centerRight,
                           padding: EdgeInsets.only(right: 16),
                           child: Icon(
                             Icons.delete,
-                            color: Colors.white,
+                            color: Color.fromARGB(255, 255, 255, 255),
                           ),
                         ),
                         onDismissed: (direction) {
@@ -170,7 +170,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             subtitle: Text(
                               user['profession'],
-                              style: TextStyle(color: Colors.brown),
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 96, 98, 119)),
                             ),
                             trailing: IconButton(
                               onPressed: () {

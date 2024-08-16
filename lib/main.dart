@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       title: "CRUD APPLICATION",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: const Color.fromARGB(255, 129, 129, 129),
           scaffoldBackgroundColor: Colors.black12,
           primaryColor: Color.fromARGB(255, 11, 27, 37),
           appBarTheme: AppBarTheme(
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
               border: OutlineInputBorder(),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: Color.fromARGB(255, 255, 241, 47),
+                  color: Color.fromARGB(255, 0, 0, 0),
                 ),
               ))),
       home: HomeScreen(),
