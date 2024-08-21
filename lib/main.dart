@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       title: "CRUD APPLICATION",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          primarySwatch: const Color.fromARGB(255, 129, 129, 129),
+          primarySwatch: Colors.blueGrey, // Use a predefined MaterialColor here
           scaffoldBackgroundColor: Colors.black12,
           primaryColor: Color.fromARGB(255, 11, 27, 37),
           appBarTheme: AppBarTheme(
