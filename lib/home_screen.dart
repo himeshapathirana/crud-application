@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -34,39 +33,42 @@ class _HomeScreenState extends State<HomeScreen> {
     _professionController.text = user['profession'];
 
     showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text("edit User"),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextFormField(
-                  controller: _nameController,
-                  decoration: InputDecoration(labelText: "User Name"),
-                ),
-                SizedBox(height: 8),
-                TextFormField(
-                  controller: _professionController,
-                  decoration: InputDecoration(labelText: "User profession"),
-                ),
-              ],
-            ),
-            actions: [
-              TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text("Cancel")),
-              ElevatedButton(
-                  onPressed: () {
-                    _updateUser(user.id);
-                    Navigator.pop(context);
-                  },
-                  child: Text("Update")),
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Edit User"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextFormField(
+                controller: _nameController,
+                decoration: const InputDecoration(labelText: "User Name"),
+              ),
+              const SizedBox(height: 8),
+              TextFormField(
+                controller: _professionController,
+                decoration: const InputDecoration(labelText: "User Profession"),
+              ),
             ],
-          );
-        });
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text("Cancel"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                _updateUser(user.id);
+                Navigator.pop(context);
+              },
+              child: const Text("Update"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void _updateUser(String userId) {
@@ -90,54 +92,48 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("CRUD APPLICATION"),
+        title: const Text("CRUD Application"),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             TextFormField(
               controller: _nameController,
-              decoration: InputDecoration(labelText: "Enter User Name"),
+              decoration: const InputDecoration(labelText: "Enter User Name"),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextFormField(
               controller: _professionController,
-              decoration: InputDecoration(labelText: "Enter User Profession"),
+              decoration: const InputDecoration(labelText: "Enter User Profession"),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 if (_nameController.text.isNotEmpty &&
                     _professionController.text.isNotEmpty) {
-                  _users.add({
-                    'name': _nameController.text,
-                    'profession': _professionController.text
-                  }).then((value) {
-                    // Clear the text fields after successful addition
-                    _nameController.clear();
-                    _professionController.clear();
-                  }).catchError((error) {
-                    // Handle errors here
-                    print("Failed to add user: $error");
-                  });
+                  _addUser(); // Call the _addUser method here
                 } else {
-                  // Show some error message or validation feedback
-                  print("Fields cannot be empty");
+                  // Handle empty fields
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Fields cannot be empty"),
+                    ),
+                  );
                 }
               },
-              child: Text("Add user"),
+              child: const Text("Add User"),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Expanded(
-              child: StreamBuilder(
+              child: StreamBuilder<QuerySnapshot>(
                 stream: _users.snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return Text("Error: ${snapshot.error}");
                   }
                   if (!snapshot.hasData) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   }
                   return ListView.builder(
                     itemCount: snapshot.data!.docs.length,
@@ -146,12 +142,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       return Dismissible(
                         key: Key(user.id),
                         background: Container(
-                          color: Color.fromARGB(255, 165, 0, 0),
+                          color: const Color.fromARGB(255, 165, 0, 0),
                           alignment: Alignment.centerRight,
-                          padding: EdgeInsets.only(right: 16),
-                          child: Icon(
+                          padding: const EdgeInsets.only(right: 16),
+                          child: const Icon(
                             Icons.delete,
-                            color: Color.fromARGB(255, 255, 255, 255),
+                            color: Colors.white,
                           ),
                         ),
                         onDismissed: (direction) {
@@ -160,24 +156,24 @@ class _HomeScreenState extends State<HomeScreen> {
                         direction: DismissDirection.endToStart,
                         child: Card(
                           elevation: 4,
-                          margin: EdgeInsets.symmetric(vertical: 8),
+                          margin: const EdgeInsets.symmetric(vertical: 8),
                           child: ListTile(
                             title: Text(
                               user['name'],
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             subtitle: Text(
                               user['profession'],
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Color.fromARGB(255, 96, 98, 119)),
                             ),
                             trailing: IconButton(
                               onPressed: () {
                                 _editUser(user);
                               },
-                              icon: Icon(Icons.edit),
+                              icon: const Icon(Icons.edit),
                             ),
                           ),
                         ),
